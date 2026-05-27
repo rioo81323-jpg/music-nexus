@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIME-NEXUS | Sound Station</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0b0813;
+            color: #f3f1f6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --neon-purple: #bc13fe;
+            --dark-bg: #0b0813;
+            --card-bg: rgba(23, 16, 38, 0.6);
+            --border-color: rgba(188, 19, 254, 0.2);
+        }
+
+        header {
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(11, 8, 19, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--neon-purple);
+            text-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        nav a {
+            color: #b5b2bc;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--neon-purple);
+            text-shadow: 0 0 8px var(--neon-purple);
+        }
+
+        .hero-section {
+            min-height: 60vh;
+            padding: 40px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            gap: 30px;
+        }
+
+        .hero-bg-text {
+            position: absolute;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10rem;
+            font-weight: 900;
+            color: rgba(188, 19, 254, 0.03);
+            z-index: -1;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            user-select: none;
+        }
+
+        .hero-content {
+            max-width: 55%;
+        }
+
+        .hero-tag {
+            background: rgba(188, 19, 254, 0.15);
+            color: #e49fff;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border: 1px solid rgba(188, 19, 254, 0.3);
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin: 20px 0;
+        }
+
+        .text-neon {
+            color: #e49fff;
+            text-shadow: 0 0 15px rgba(188, 19, 254, 0.6);
+        }
+
+        .hero-content p {
+            color: #a4a0b0;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--neon-purple);
+            color: white;
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #cd32ff;
+            box-shadow: 0 0 25px rgba(188, 19, 254, 0.7);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-img-container {
+            width: 30%;
+            max-width: 320px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 16px;
+            z-index: 2;
+            border: 1px solid rgba(188, 19, 254, 0.2);
+        }
+
+        .hero-img-glow {
+            position: absolute;
+            width: 102%;
+            height: 102%;
+            background: var(--neon-purple);
+            filter: blur(30px);
+            opacity: 0.3;
+            z-index: 1;
+            border-radius: 16px;
+            top: -1%;
+            left: -1%;
+        }
+
+        .trending-section {
+            padding: 40px 5%;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .anime-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(188, 19, 254, 0.6);
+            box-shadow: 0 10px 25px rgba(188, 19, 254, 0.2);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: 0.5s;
+        }
+
+        .anime-card:hover .card-img-container img {
+            transform: scale(1.05);
+        }
+
+        .card-info h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-info p {
+            color: #9d98a6;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .music-player {
+            width: 100%;
+            height: 32px;
+            border-radius: 8px;
+            outline: none;
+            margin-top: 5px;
+        }
+
+        footer {
+            padding: 30px 5%;
+            text-align: center;
+            color: #635f70;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 968px) {
+            .hero-section { flex-direction: column; text-align: center; gap: 40px; padding-top: 20px; }
+            .hero-content { max-width: 100%; }
+            .hero-bg-text { display: none; }
+            .hero-buttons { justify-content: center; }
+            .hero-img-container { width: 60%; }
+        }
+    </style>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=500;700;900&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="logo">NIME-<span>NEXUS</span></div>
+        <nav>
+            <a href="#" class="active">Home</a>
+            <a href="#">Soundtracks</a>
+            <a href="#">About</a>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-bg-text">MUSIC</div>
+        <div class="hero-content">
+            <span class="hero-tag">PERSONAL PLAYLIST</span>
+            <h1>Your Aesthetic <br><span class="text-neon">Sound Station</span></h1>
+            <p>Jelajahi lagu favorit pilihanmu dan rasakan ketukan musik dengan suasana futuristik ungu neon.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary">Listen Now</a>
+                <a href="#" class="btn btn-secondary">Favorite List</a>
+            </div>
+        </div>
+        <div class="hero-img-container">
+            <img src="./anime.jpg" alt="Anime Character Utama" class="hero-img">
+            <div class="hero-img-glow"></div>
+        </div>
+    </section>
+
+    <section class="trending-section">
+        <h2 class="section-title">Trending <span class="text-neon">Tracks</span></h2>
+        <div class="anime-grid">
+            
+            <div class="anime-card">
+                <div class="card-img-container">
+                    <img src="./about you.jpg" alt="About You">
+                </div>
+                <div class="card-info">
+                    <h3>About You</h3>
+                    <p>The 1975</p>
+                    <audio controls class="music-player">
+                        <source src="./about you.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <div class="card-img-container">
+                    <img src="./multo.jpg" alt="Multo">
+                </div>
+                <div class="card-info">
+                    <h3>Multo</h3>
+                    <p>Cup of Joe</p>
+                    <audio controls class="music-player">
+                        <source src="./multo.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <div class="card-img-container">
+                    <img src="./i wanna be yours.jpg" alt="I Wanna Be Yours">
+                </div>
+                <div class="card-info">
+                    <h3>I Wanna Be Yours</h3>
+                    <p>Arctic Monkeys</p>
+                    <audio controls class="music-player">
+                        <source src="./i wanna be yours.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <div class="card-img-container">
+                    <img src="./jangan paksa rindu.jpg" alt="Jangan Paksa Rindu">
+                </div>
+                <div class="card-info">
+                    <h3>Jangan Paksa Rindu</h3>
+                    <p>Ifan Seventeen</p>
+                    <audio controls class="music-player">
+                        <source src="./jangan paksa rindu.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <div class="card-img-container">
+                    <img src="./that should be me.jpg" alt="That Should Be Me">
+                </div>
+                <div class="card-info">
+                    <h3>That Should Be Me</h3>
+                    <p>Justin Bieber</p>
+                    <audio controls class="music-player">
+                        <source src="./that should be me.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 NIME-NEXUS Project. Built for Music Lovers.</p>
+    </footer>
+
+</body>
+</html>
